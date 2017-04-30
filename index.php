@@ -13,8 +13,11 @@ $username = 'adammydesign';
 //value from database placeholder (tweet_refresh)
 $start_date = new DateTime('2017-04-30 10:55:00');
 
-//generate new date for current time and calculate the difference between the 2 dates
-$since_start = $start_date->diff(new DateTime());
+//current time
+$current_time = new DateTime();
+
+//Calculate the difference between the 2 dates
+$since_start = $start_date->diff($current_time);
 
 //this gets the minutes difference which is all we need really
 $difference = $since_start->i;
@@ -42,6 +45,11 @@ if($difference >= 3) {
   $tweetFile = fopen('./tweets/'.$username.'.txt', 'w');
   fwrite($tweetFile, $tweet);
   fclose($tweetFile);
+
+  /*
+  *  WRITE THE NEW DATETIME TO DATABASE OTHERWISE THIS WILL NEVER CHANGE
+  * THIS IS THE $current_time;
+  */
 
   //now that we have written we now include the text file
   include('./tweets/'.$username.'.txt');
